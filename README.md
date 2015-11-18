@@ -1,22 +1,29 @@
-#Open Energy Playground
+# Table of Contents
 
-## Table of Contents
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-* [Introduction](#introduction)
-* [What is Docker?](#what-is-docker)
-* [What is InfluxDB?](#what-is-influxdb)
-* [What is Grafana?](#what-is-grafana)
-* [What is MQTT?](#what-is-mqtt)
-* [What is Node-RED?](#what-is-node-red)
-* [The Dockerfile](#the-dockerfile)
-* [Application Configuration Files](#application-configuration-files)
-* [External Volumes](#external-volumes)
-* [Building the Container](#building-the-container)
-* [Running the Container](#running-the-container)
-* [Getting the public IP of the docker container](#getting-the-public-ip-of-the-docker-container)
-* [Accessing Grafana and InfluxDB](#accessing-grafana-and-influxdb)
-* [Reading & Writing Data in InfluxDB](#reading-and-writing-data-in-influxdb)
-* [Next Steps](#next-steps)
+- [Table of Contents](#table-of-contents)
+- [Open Energy Playground](#open-energy-playground)
+	- [Introduction](#introduction)
+	- [The Playground and Docker](#the-playground-and-docker)
+	- [Installing the playground](#installing-the-playground)
+	- [Accessing the Playground](#accessing-the-playground)
+	- [Containers in the Playground](#containers-in-the-playground)
+- [Hello World - Our first node-RED flow](#hello-world-our-first-node-red-flow)
+	- [Nodered](#nodered)
+	- [Input node](#input-node)
+	- [Debug node](#debug-node)
+	- [Extracting power value](#extracting-power-value)
+	- [Sendning to local MQTT](#sendning-to-local-mqtt)
+- [On Docker containers](#on-docker-containers)
+	- [External Volumes](#external-volumes)
+	- [Running containers and logging](#running-containers-and-logging)
+	- [Port mapping](#port-mapping)
+	- [Modifying containers](#modifying-containers)
+	- [Getting inside a container](#getting-inside-a-container)
+<!-- /TOC -->
+
+# Open Energy Playground
 
 ## Introduction
 
@@ -26,108 +33,34 @@ Energy data is collected and measured from sites such as offices, homes, constru
 This data is then analyzed, stored and processed with tools from the toolbox to result in mockups, tutorials, research material and concept services.
 Data will be made available through open source when the project is finished.
 
-## What is Docker?
+## The Playground and Docker
+
+The processing platform (or playground) is built on number of Docker containers.
+But, what is Docker?
 
 "Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – anything you can install on a server. This guarantees that it will always run the same, regardless of the environment it is running in."
 
 \- [Docker](https://www.docker.com)
 
-You can download the docker toolbox [here](https://www.docker.com/docker-toolbox), which contains everything you need to run this playground. If you are looking for a more in-depth guide to the installation of docker, take a look [here](https://docs.docker.com/installation).
-
-## What is InfluxDB?
-
-InfluxDB is a time-series database that has been built to work best with metrics, events, and analytics. The solution is written completely in Go and relies on no external dependencies to run. It is being maintained [here](http://influxdb.com).
-
-## What is Grafana?
-
-Grafana is a metrics dashboard which plugs into solutions such as Graphite, InfluxDB, and OpenTSDB. You would use Grafana to visualize the various metrics data you are pushing into InfluxDB.
-
-## What is MQTT?
-
-"MQTT is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport. It is useful for connections with remote locations where a small code footprint is required and/or network bandwidth is at a premium."
-
-This is the protocall that connects all the nodes together. It passes data from sensors to servers and from servers to clients.
-
-Op-en uses [Mosquitto](http://mosquitto.org/), an open source broker that implements the MQTT protocall.
-
-## What is node-RED?
-
-Node-RED is a tool for wiring together hardware devices, APIs and online services in new and interesting ways.
-
-\- [Node-RED](http://nodered.org/)
-
-## The Dockerfile
-
-You can either create a folder and place your Dockerfile and all configuration files in it or you can clone these files from our repository [here](https://github.com/LeoFidjeland/op-en). We recommend cloning so you capture all required configuration files, plus a pre-built Dockerfile. If you spot an issue or have an improvement, feel free to issue a PR, too!
-
-The contents of the Dockerfile is well commented to explain what is going on. See it [here](https://github.com/LeoFidjeland/op-en/blob/master/Dockerfile)
-
-## Application Configuration Files
-
-We are using the following configuration files:
-
-| Used by | Config File |
-| --- | --- |
-| Grafana | * No file (default config)* |
-| Mosquitto | * No file (default config)* |
-| Supervisor | supervisord.conf |
-| InfluxDB | config.toml |
-
-If you cloned the repo then you should have these files; however, note, that some of the files must be edited with your desired database name, etc.
-
-### InfluxDB Config
-
-We use the default configuration file for influxdb. This was generated by running the following command on the container:
+To get started, go through the first step in the Docker getting started guide ([Mac](http://docs.docker.com/mac/step_one/), [Windows](http://docs.docker.com/windows/step_one/) or [Linux](http://docs.docker.com/linux/step_one/)). Then come back here!
 
 
-    docker exec [container id] /opt/influxdb/influxd config
+## Installing the playground
+Clone the Open Energy Playground:
+```
+git clone https://github.com/LeoFidjeland/op-en-playground.git
+```
+This project contains only a Docker Compose file that specifies what programs to download, and how to run them on your computer. To download, install and startup all these programs, go into the project folder and run docker-compose, like so:
+```
+cd op-en-playground/
+docker-compose up -d
+```
+Thats it!
 
-Get the container id by running
+When the compose script is finished, the playground is ready.
 
-    docker ps
+## Accessing the Playground
 
-So an example would be:
-
-
-    docker exec 594dc212f28a /opt/influxdb/influxd config
-
-## External Volumes
-
-It is very important to understand the ephemeral nature of containers. This means that data created and stored within the container can disappear if the container restarts or is stopped.
-
-We expose the InfluxDB database path on this line:
-
-    VOLUME ["/opt/influxdb/shared/data"]
-
-This allows us to pass the *-v* switch to *docker* to tell it to map the path in the container to a local path in our host system. When data is written to InfluxDB the it is now not stored within the container itself and is persistent beyond a restart.
-
-## Building the Container
-
-Now that you have put your Dockerfile and configuration files together it is time to build your container. You will need to ensure you're working directory has your Dockerfile and configuration files in it. To build a container from your Dockerfile you would run the following command:
-
-    docker build -t op-en .
-
-The *-t* parameter tags the image with the name *op-en*. The build will execute the Dockerfile. Inspect the output for any errors. If all looks good you should be ready to start the container up.
-
-## Running the Container
-
-Building a container will not automatically start the container. You will need to do that next. Ensure the **/opt/influxdb** path exists on your host file system then run the following command.
-
-    docker run -d -v /opt/influxdb/:/opt/influxdb/shared/data -p 1880:1880 -p 3000:3000 -p 8083:8083 -p 8086:8086 op-en
-
-This tells Docker to:
-
-1. Start the *op-en* image detached from the current process (*-d*).
-1. Map the container path of */opt/influxdb/shared/data* to your local */opt/influxdb*;
-1. Map your local port 1880, 3000, 8083, and 8086 to the exposed ports in the container.
-
-You can validate the container is running by issuing the command:
-
-    docker ps
-
-## Getting the public IP of the docker container
-
-You should now be able to reach Grafana, Influx web Admin and node-RED by your browser!
 First you have to find the public ip of the docker-machine that is running the container.
 You can find this in two ways:
 
@@ -153,32 +86,73 @@ docker is configured to use the default machine with IP 192.168.99.100
 docker-machine ip default
 ```
 
-## Accessing Grafana and InfluxDB
+## Containers in the Playground
 
-OK NOW you should now be able to reach Grafana, Influx web Admin and node-RED by your browser! :)
+The playground currently contains 5 containers.
 
-Grafana:
+- [InfluxDB](https://influxdb.com/), a database.
+- [Grafana](http://grafana.org/), a visualizing tool.
+- [Mosquitto](http://mosquitto.org/), a broker relaying [MQTT](http://mqtt.org/) messages.
+- [node-RED](http://nodered.org/), a tool for wiring everything together.
+- [App Server](https://github.com/LeoFidjeland/op-en-app-server), a bridge from MQTT to websockets.
 
-    http://yourpublicip:3000
 
-The default credential is *admin* with the password *admin*. You will want to change this as soon as you can.
+# Hello World - Our first node-RED flow
 
-InfluxDB management interface:
-
-    http://yourpublicip:8083/
-
-The default credential is *root* with the password *root*. You will want to change this as soon as you can.
-
-node-red management interface:
+With the public ip from the previous section, go to:
 
     http://yourpublicip:1880/
 
-## Reading and Writing Data in InfluxDB
+## Nodered
 
 TODO
 
-## Next Steps
+## Input node
 
-At this point, you should have a single container using supervisor to run Grafana, InfluxDB and node-RED.
+TODO
+
+## Debug node
+
+TODO
+
+## Extracting power value
+
+TODO
+
+## Sendning to local MQTT
+
+TODO
+
+# On Docker containers
+
+There is a lot to know and learn about Docker containers. Some of the most important aspects when it comes to the playground is discussed here.
+
+## External Volumes
+
+It is very important to understand the ephemeral nature of containers. This means that data created and stored within the container can disappear if the container restarts or is stopped.
+
+For example, if we do not specify where the flows should be stored when running the node-RED container, they will be stored on the container itself. And the next time you restart the container, all you work will be LOST! Tragic!
+
+To avoid this, the compose script (by default) maps the folder in the container that stores the flows to another folder on the host system. In the compose file, this is specified as the node-red folder within this project.
+
+With this mapping in place, the flows are persistent beyond a restart.
+
+## Running containers and logging
+
+You can see what containers are running with:
+
+    docker ps
+
+TODO Add more
+
+## Port mapping
+
+TODO
+
+## Modifying containers
+
+TODO
+
+## Getting inside a container
 
 TODO
