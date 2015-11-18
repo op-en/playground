@@ -6,6 +6,8 @@ op-en-app-server:
    - mosquitto
 influx:
   image: tutum/influxdb
+  volumes:
+    - ./influxdb:/data
   ports:
     - "8083:8083"
     - "8086:8086"
@@ -18,8 +20,10 @@ mosquitto:
   ports:
     - "1883:1883"
 node-red:
-  image: node-red
+  image: leofidjeland/op-en-node-red
   ports:
     - "1880:1880"
   volumes:
-   - node-red:/root/.node-red
+   - ./node-red:/root/.node-red
+  links:
+    - mosquitto
