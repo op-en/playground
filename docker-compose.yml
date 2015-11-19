@@ -20,7 +20,7 @@ mosquitto:
   ports:
     - "1883:1883"
 node-red:
-  image: leofidjeland/op-en-node-red
+  image: openenergy/node-red
   ports:
     - "1880:1880"
   volumes:
