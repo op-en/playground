@@ -1,5 +1,5 @@
-op-en-app-server:
-  image: leofidjeland/op-en-app-server
+app-server:
+  image: openenergy/app-server
   ports:
    - "5000:5000"
   links:
