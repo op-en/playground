@@ -19,3 +19,4 @@ dump.rdb
 #Folders created by compose
 node-red
 influxdb
+www

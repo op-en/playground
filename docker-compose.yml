@@ -27,3 +27,9 @@ node-red:
    - ./node-red:/root/.node-red
   links:
     - mosquitto
+nginx:
+  image: nginx
+  ports:
+    - "8080:80"
+  volumes:
+    - ./www:/usr/share/nginx/html:ro
