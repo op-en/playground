@@ -88,13 +88,14 @@ docker-machine ip default
 
 ## Containers in the Playground
 
-The playground currently contains 5 containers.
+The playground currently contains 6 containers.
 
 - [InfluxDB](https://influxdb.com/), a database.
 - [Grafana](http://grafana.org/), a visualizing tool.
 - [Mosquitto](http://mosquitto.org/), a broker relaying [MQTT](http://mqtt.org/) messages.
 - [node-RED](http://nodered.org/), a tool for wiring everything together.
 - [App Server](https://github.com/LeoFidjeland/op-en-app-server), a bridge from MQTT to websockets.
+- [nginx](http://nginx.org/), a web server hosting your custom content.
 
 
 # Hello World - Our first node-RED flow
