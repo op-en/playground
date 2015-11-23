@@ -30,6 +30,6 @@ node-red:
 nginx:
   image: nginx
   ports:
-    - "8080:80"
+    - "80:80"
   volumes:
     - ./www:/usr/share/nginx/html:ro
