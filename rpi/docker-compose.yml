@@ -1,0 +1,31 @@
+app-server:
+  image: openenergy/rpi-app-server
+  ports:
+   - "5000:5000"
+influx:
+  image: sbiermann/rpi-influxdb
+  volumes:
+    - ../data/influxdb:/data
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+grafana:
+  image: grafana
+  ports:
+    - "3000:3000"
+mosquitto:
+  image: nieleyde/rpi-mosquitto
+  ports:
+    - "1883:1883"
+node-red:
+  image: openenergy/rpi-node-red
+  ports:
+    - "1880:1880"
+  volumes:
+   - ../data/node-red:/root/.node-red
+nginx:
+  image: akkerman/rpi-nginx
+  ports:
+    - "80:80"
+  volumes:
+    - ../data/www:/usr/share/nginx/html:ro
