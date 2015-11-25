@@ -2,8 +2,6 @@ app-server:
   image: openenergy/app-server
   ports:
    - "5000:5000"
-  links:
-   - mosquitto
 influx:
   image: tutum/influxdb
   volumes:
@@ -26,8 +24,6 @@ node-red:
     - "1880:1880"
   volumes:
    - ./data/node-red:/root/.node-red
-  links:
-    - mosquitto
 nginx:
   image: nginx
   ports:
