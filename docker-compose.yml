@@ -21,6 +21,7 @@ mosquitto:
     - "1883:1883"
 node-red:
   image: openenergy/node-red
+  hostname: op-en-node-red
   ports:
     - "1880:1880"
   volumes:
