@@ -7,7 +7,7 @@ app-server:
 influx:
   image: tutum/influxdb
   volumes:
-    - ./influxdb:/data
+    - ./data/influxdb:/data
   ports:
     - "8083:8083"
     - "8086:8086"
@@ -24,7 +24,7 @@ node-red:
   ports:
     - "1880:1880"
   volumes:
-   - ./node-red:/root/.node-red
+   - ./data/node-red:/root/.node-red
   links:
     - mosquitto
 nginx:
@@ -32,4 +32,4 @@ nginx:
   ports:
     - "80:80"
   volumes:
-    - ./www:/usr/share/nginx/html:ro
+    - ./data/www:/usr/share/nginx/html:ro
