@@ -9,17 +9,10 @@
 	- [Installing the playground](#installing-the-playground)
 	- [Accessing the Playground](#accessing-the-playground)
 	- [Containers in the Playground](#containers-in-the-playground)
-- [Hello World - Our first node-RED flow](#hello-world-our-first-node-red-flow)
-	- [Nodered](#nodered)
-	- [Input node](#input-node)
-	- [Debug node](#debug-node)
-	- [Extracting power value](#extracting-power-value)
-	- [Sendning to local MQTT](#sendning-to-local-mqtt)
 - [On Docker containers](#on-docker-containers)
 	- [External Volumes](#external-volumes)
 	- [Running containers and logging](#running-containers-and-logging)
 	- [Port mapping](#port-mapping)
-	- [Modifying containers](#modifying-containers)
 	- [Getting inside a container](#getting-inside-a-container)
 
 <!-- /TOC -->
@@ -99,32 +92,6 @@ The playground currently contains 6 containers.
 - [nginx](http://nginx.org/), a web server hosting your custom content.
 
 
-# Hello World - Our first node-RED flow
-
-With the public ip from the previous section, go to:
-
-    http://yourpublicip:1880/
-
-## Nodered
-
-TODO
-
-## Input node
-
-TODO
-
-## Debug node
-
-TODO
-
-## Extracting power value
-
-TODO
-
-## Sendning to local MQTT
-
-TODO
-
 # On Docker containers
 
 There is a lot to know and learn about Docker containers. Some of the most important aspects when it comes to the playground is discussed here.
@@ -145,16 +112,18 @@ You can see what containers are running with:
 
     docker ps
 
-TODO Add more
+And the images available with:
+```
+docker images
+```
 
 ## Port mapping
 
-TODO
-
-## Modifying containers
-
-TODO
+If deployed with this compose script, the ports from the containers are automatically mapped to the host.
 
 ## Getting inside a container
 
-TODO
+If you want to run something custom inside an image, you can run:
+```
+docker exec -t -i [docker image] /bin/bash
+```
