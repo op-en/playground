@@ -42,11 +42,11 @@ To get started, go through the first step in the Docker getting started guide ([
 ## Installing the playground
 Clone the Open Energy Playground:
 ```
-git clone https://github.com/LeoFidjeland/op-en-playground.git
+git clone https://github.com/op-en/playground.git
 ```
 This project contains only a Docker Compose file that specifies what programs to download, and how to run them on your computer. To download, install and startup all these programs, go into the project folder and run docker-compose, like so:
 ```
-cd op-en-playground/
+cd playground/
 docker-compose up -d
 ```
 Thats it!
@@ -88,7 +88,7 @@ The playground currently contains 6 containers.
 - [Grafana](http://grafana.org/), a visualizing tool.
 - [Mosquitto](http://mosquitto.org/), a broker relaying [MQTT](http://mqtt.org/) messages.
 - [node-RED](http://nodered.org/), a tool for wiring everything together.
-- [App Server](https://github.com/LeoFidjeland/op-en-app-server), a bridge from MQTT to websockets.
+- [App Server](https://github.com/op-en/app-server), a bridge from MQTT to websockets.
 - [nginx](http://nginx.org/), a web server hosting your custom content.
 
 
