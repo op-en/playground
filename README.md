@@ -40,6 +40,9 @@ To get started, go through the first step in the Docker getting started guide ([
 
 
 ## Installing the playground
+
+(For installation on Raspberry Pi, see [separate instructions](https://github.com/op-en/playground/tree/master/rpi))
+
 Clone the Open Energy Playground:
 ```
 git clone https://github.com/op-en/playground.git
