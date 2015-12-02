@@ -10,7 +10,7 @@ influx:
     - "8083:8083"
     - "8086:8086"
 mosquitto:
-  image: nieleyde/rpi-mosquitto
+  image: openenergy/rpi-mosquitto
   ports:
     - "1883:1883"
 node-red:
