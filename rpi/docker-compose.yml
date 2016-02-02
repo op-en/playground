@@ -24,6 +24,8 @@ node-red:
     - "1880:1880"
   links:
     - mosquitto:mqtt
+  devices:
+    - "/dev/ttyAMA0:/dev/ttyUSB0"
   volumes:
    - ../data/node-red:/root/.node-red
 nginx:
