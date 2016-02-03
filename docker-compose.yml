@@ -2,6 +2,8 @@ app-server:
   image: openenergy/app-server
   ports:
     - "5000:5000"
+  environment:
+   - MQTT=mosquitto
   links:
     - mosquitto
 influx:
@@ -30,8 +32,7 @@ node-red:
     - ./data/node-red:/root/.node-red
   links:
     - influx
-  links:
-    - mosquitto
+    - mosquitto:mqtt
 nginx:
   image: nginx
   ports:
