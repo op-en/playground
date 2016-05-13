@@ -7,9 +7,9 @@ app-server:
   links:
     - mosquitto
 influx:
-  image: tutum/influxdb
-  # volumes: #Mapping doesn't work, see https://github.com/influxdata/influxdb/issues/4425
-  #   - ./data/influxdb:/data
+  image: tutum/influxdb:0.12
+  volumes:
+    - ./data/influxdb:/data
   ports:
     - "8083:8083"
     - "8086:8086"
