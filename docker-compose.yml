@@ -2,10 +2,8 @@ app-server:
   image: openenergy/app-server
   ports:
     - "5000:5000"
-  environment:
-   - MQTT=mosquitto
   links:
-    - mosquitto
+    - mosquitto:mqtt
 influx:
   image: tutum/influxdb:0.12
   volumes:
