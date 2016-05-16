@@ -1,0 +1,3 @@
+[submodule "data/www/animera.js"]
+	path = data/www/animera.js
+	url = https://github.com/op-en/animera.js.git

@@ -17,4 +17,9 @@ dump.rdb
 
 
 #Folders created by compose
-data
+data/*
+!data/www
+
+data/www/*
+!data/www/examples
+!data/www/animera.js
