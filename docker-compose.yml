@@ -37,3 +37,5 @@ nginx:
     - "80:80"
   volumes:
     - ./data/www:/usr/share/nginx/html:ro
+    # We use a custom configuration to turn off sendfile. See https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#virtualbox
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
