@@ -22,4 +22,4 @@ data/*
 
 data/www/*
 !data/www/examples
-!data/www/animera.js
+!data/www/animera.js-widgets
