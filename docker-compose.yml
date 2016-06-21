@@ -20,7 +20,7 @@ grafana:
   links:
     - influx
 mosquitto:
-  image: ansi/mosquitto
+  image: jllopis/mosquitto
   ports:
     - "1883:1883"
 node-red:
