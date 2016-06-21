@@ -130,3 +130,28 @@ If you want to run something custom inside an image, you can run:
 ```
 docker exec -t -i [docker image] /bin/bash
 ```
+
+# First startup
+
+## influx 
+
+goto http://192.168.0.x:8086
+
+login with root root and start configuring
+```
+CREATE DATABASE yourdb
+CREATE USER "new_admin" WITH PASSWORD 'password' WITH ALL PRIVILEGES
+DROP USER root
+CREATE USER "user_poster" WITH PASSWORD 'pass'
+GRANT WRITE  ON yourdb TO user_poster
+GRANT READ  ON yourdb TO user_poster
+```
+now change your config to use authentication default is not
+
+## grafana
+
+Add user 
+Add organistation
+
+
+
