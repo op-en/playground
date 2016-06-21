@@ -5,9 +5,9 @@ app-server:
   links:
     - mosquitto:mqtt
 influx:
-  image: tutum/influxdb:0.12
+  image: influxdb
   volumes:
-    - ./data/influxdb:/data
+    - ./data/influxdb:/var/lib/influxdb
   ports:
     - "8083:8083"
     - "8086:8086"
