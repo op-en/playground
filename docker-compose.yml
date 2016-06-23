@@ -5,7 +5,7 @@ app-server:
   links:
     - mosquitto:mqtt
 influx:
-  image: influxdb
+  image: influxdb:0.13
   volumes:
     - ./data/influxdb:/var/lib/influxdb
   ports:
@@ -23,6 +23,7 @@ mosquitto:
   image: jllopis/mosquitto
   ports:
     - "1883:1883"
+    - "9883:9883"
 node-red:
   image: openenergy/node-red
   hostname: op-en-node-red
