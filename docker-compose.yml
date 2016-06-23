@@ -5,7 +5,7 @@ app-server:
   links:
     - mosquitto:mqtt
 influx:
-  image: influxdb:0.13
+  image: influxdb
   volumes:
     - ./data/influxdb:/var/lib/influxdb
   ports:
